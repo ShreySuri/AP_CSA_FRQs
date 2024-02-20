@@ -1,3 +1,40 @@
-```
-test
-  ```
+public class CombinationLock
+{
+	String pass;
+	int[] letters; // acts like a frequency HashMap
+	
+	public CombinationLock(String pass)
+	{
+		this.pass = pass;
+		letters = new int[26];
+		for(int i = 0; i < 4; i++)
+		{
+			letters[pass.charAt(i) - 'a']++;
+		}
+		// pass must be a String of length 4
+	}
+	
+	public String getClue(String guess)
+	{
+		// guess must be a String of length 4
+		char[] arr = new char[4];
+		for(int i = 0; i < 4; i++)
+		{
+			if(pass.charAt(i) == guess.charAt(i))
+			{
+				arr[i] = pass.charAt(i);
+				letters[guess.charAt(i) - 'a']--;
+			}
+			else if(letters[guess.charAt(i) - 'a'] > 0)
+			{
+				arr[i] = '+';
+				letters[guess.charAt(i) - 'a']--;
+			}
+			else
+			{
+				arr[i] = '*';
+			}
+		}
+		return new String(arr);
+	}
+}
